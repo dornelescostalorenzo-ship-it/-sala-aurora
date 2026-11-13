@@ -29,7 +29,7 @@ Attributes.info = {
 	-- a escolhe primeiro, então quem aposta nela é recompensado.
 	sorte = {
 		name = "Sorte",
-		description = "Golpes de sorte de dano triplo, XP em dobro, mais moedas, drops raros e chance de escapar da morte.",
+		description = "Golpes de sorte devastadores, inimigos que erram, XP em dobro, boladas de moedas, drops raros e chance de escapar da morte.",
 	},
 	percepcao = {
 		name = "Percepção",

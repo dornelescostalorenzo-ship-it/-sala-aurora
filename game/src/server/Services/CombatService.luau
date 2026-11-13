@@ -27,7 +27,7 @@ local function rollDamage(data: any): (number, string)
 
 	local kind = "normal"
 	if random:NextNumber() < Formulas.luckyStrikeChance(attrs) then
-		damage *= Formulas.LUCKY_STRIKE_MULTIPLIER
+		damage *= Formulas.luckyStrikeMultiplier(attrs)
 		kind = "luck"
 	elseif random:NextNumber() < Formulas.critChance(attrs) then
 		damage *= Formulas.CRIT_MULTIPLIER

@@ -152,12 +152,17 @@ function StatsService.damagePlayer(player: Player, amount: number)
 		return
 	end
 
+	if random:NextNumber() < Formulas.luckyDodgeChance(data.attributes) then
+		Net.get("Notify"):FireClient(player, "Errou! Pura sorte.", "luck")
+		return
+	end
+
 	if amount >= humanoid.Health then
 		local now = os.clock()
 		local offCooldown = now - state.lastCheatDeath >= Formulas.CHEAT_DEATH_COOLDOWN
 		if offCooldown and random:NextNumber() < Formulas.cheatDeathChance(data.attributes) then
 			state.lastCheatDeath = now
-			humanoid.Health = 1
+			humanoid.Health = math.max(1, humanoid.MaxHealth * Formulas.CHEAT_DEATH_HEAL)
 			Net.get("Notify"):FireClient(player, "Por um triz! A sorte te salvou.", "luck")
 			return
 		end

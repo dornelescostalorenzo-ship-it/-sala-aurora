@@ -10,8 +10,9 @@ Formulas.ATTACK_STAMINA_COST = 6
 Formulas.SPRINT_STAMINA_PER_SECOND = 14
 Formulas.SPRINT_SPEED_BONUS = 8
 Formulas.CRIT_MULTIPLIER = 1.75
-Formulas.LUCKY_STRIKE_MULTIPLIER = 3
-Formulas.CHEAT_DEATH_COOLDOWN = 45
+Formulas.CHEAT_DEATH_COOLDOWN = 30
+Formulas.CHEAT_DEATH_HEAL = 0.3
+Formulas.JACKPOT_MULTIPLIER = 10
 
 type Attrs = { [string]: number }
 
@@ -54,29 +55,45 @@ function Formulas.critChance(attrs: Attrs): number
 end
 
 -- Sorte ----------------------------------------------------------------------
--- Com 5 pontos (valor inicial) os efeitos quase não aparecem; com 40 ou mais
--- o personagem dá dano triplo em um terço dos golpes e sobrevive a metade
--- dos golpes fatais.
+-- O atributo mais forte do jogo, de propósito. Com 5 pontos (valor inicial)
+-- quase não aparece; quem investe pesado vira outra coisa: com 40 pontos,
+-- 40% dos golpes dão 5x de dano, 24% dos golpes inimigos erram e 60% dos
+-- golpes fatais são anulados.
 
 function Formulas.luckyStrikeChance(attrs: Attrs): number
-	return math.min(0.40, attrs.sorte * 0.008)
+	return math.min(0.50, attrs.sorte * 0.01)
+end
+
+-- O multiplicador do golpe de sorte também cresce com a Sorte.
+function Formulas.luckyStrikeMultiplier(attrs: Attrs): number
+	return math.min(6, 3 + attrs.sorte * 0.05)
+end
+
+-- Chance de um golpe inimigo simplesmente errar.
+function Formulas.luckyDodgeChance(attrs: Attrs): number
+	return math.min(0.30, attrs.sorte * 0.006)
 end
 
 function Formulas.doubleXpChance(attrs: Attrs): number
-	return math.min(0.35, attrs.sorte * 0.007)
+	return math.min(0.50, attrs.sorte * 0.01)
 end
 
 function Formulas.cheatDeathChance(attrs: Attrs): number
-	return math.min(0.60, attrs.sorte * 0.012)
+	return math.min(0.75, attrs.sorte * 0.015)
 end
 
 function Formulas.coinMultiplier(attrs: Attrs): number
-	return 1 + attrs.sorte * 0.02
+	return 1 + attrs.sorte * 0.03
+end
+
+-- Chance de uma recompensa em moedas sair multiplicada por JACKPOT_MULTIPLIER.
+function Formulas.jackpotChance(attrs: Attrs): number
+	return math.min(0.20, attrs.sorte * 0.004)
 end
 
 -- Multiplica o peso das raridades altas na tabela de drops (etapa 3).
 function Formulas.rareDropMultiplier(attrs: Attrs): number
-	return 1 + attrs.sorte * 0.05
+	return 1 + attrs.sorte * 0.08
 end
 
 -- Percepção ------------------------------------------------------------------

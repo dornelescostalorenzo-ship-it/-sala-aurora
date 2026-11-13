@@ -47,7 +47,12 @@ function ProgressionService.awardCoins(player: Player, amount: number)
 	if not data then
 		return
 	end
-	data.coins += math.max(1, math.floor(amount * Formulas.coinMultiplier(data.attributes) + 0.5))
+	local gained = math.max(1, math.floor(amount * Formulas.coinMultiplier(data.attributes) + 0.5))
+	if random:NextNumber() < Formulas.jackpotChance(data.attributes) then
+		gained *= Formulas.JACKPOT_MULTIPLIER
+		Net.get("Notify"):FireClient(player, `Bolada! +{gained} moedas`, "luck")
+	end
+	data.coins += gained
 	player:SetAttribute("Coins", data.coins)
 end
 
