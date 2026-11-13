@@ -20,7 +20,10 @@ function ProgressionService.awardXp(player: Player, amount: number)
 
 	if random:NextNumber() < Formulas.doubleXpChance(data.attributes) then
 		amount *= 2
-		Net.get("Notify"):FireClient(player, `Sorte! XP em dobro (+{amount})`, "luck")
+		-- Com a Sorte secreta o dobro é garantido; avisar toda vez seria ruído.
+		if not Formulas.hasSecretLuck(data.attributes) then
+			Net.get("Notify"):FireClient(player, `Sorte! XP em dobro (+{amount})`, "luck")
+		end
 	end
 
 	data.xp += amount

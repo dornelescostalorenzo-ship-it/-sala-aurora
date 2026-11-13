@@ -4,6 +4,9 @@
 local Attributes = {}
 
 Attributes.START_VALUE = 5
+-- A etapa 2 permite reduzir um atributo até este mínimo, devolvendo os pontos.
+-- É o que torna alcançável o valor secreto de Sorte (ver Formulas.SECRET_LUCK).
+Attributes.MIN_VALUE = 1
 Attributes.POINTS_PER_LEVEL = 3
 
 Attributes.order = { "forca", "destreza", "estamina", "vigor", "sorte", "percepcao" }
